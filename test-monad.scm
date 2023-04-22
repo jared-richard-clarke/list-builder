@@ -1,5 +1,21 @@
-(import (rnrs)
-        (list-builder))
+(import (rnrs))
+
+;; === list monad ===
+
+(define return
+  (lambda (x) (list x)))
+
+(define bind
+  (lambda (xs f)
+    (concat (map f xs))))
+
+(define empty '())
+
+;; === utilities ===
+
+(define concat
+  (lambda (xs)
+    (fold-right append '() xs)))
 
 ;; === test utilities ===
 
