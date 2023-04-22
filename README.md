@@ -78,22 +78,6 @@ pyTriple n =
              True -> [(x, y, z)]
              _ -> []
 
--- evaluates ->
-
-pyTriple n =
-  concat (map
-    (\x ->
-        concat (map
-          (\y ->
-              concat (map
-                (\z ->
-                    if x ^ 2 + y ^ 2 == z ^ 2
-                      then [(x, y, z)]
-                      else [])
-                [y .. n]))
-          [x .. n]))
-    [1 .. n])
-
 -- so that ->
 
 pyTriple 21
