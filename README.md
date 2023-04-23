@@ -1,7 +1,7 @@
 # `list-builder.scm`
 
 - **Description**: Library provides `for-list` — a simplified list comprehension I copied from Haskell
-  and implemented in Scheme.
+  and implemented as a Scheme macro.
 - **Syntax**: `(for-list expression [(x <- mx) ...] predicate?)`
 
 ## Example
