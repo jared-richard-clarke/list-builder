@@ -77,6 +77,22 @@ pyTriple n =
            case x ^ 2 + y ^ 2 == z ^ 2 of
              True -> [(x, y, z)]
              _ -> []
+             
+-- equivalent ->
+
+pyTriple n =
+  concat (map
+    (\x ->
+        concat (map
+          (\y ->
+              concat (map
+                (\z ->
+                    if x ^ 2 + y ^ 2 == z ^ 2
+                    then [(x, y, z)]
+                    else [])
+                [y .. n]))
+          [x .. n]))
+    [1 .. n])
 
 -- so that ->
 
