@@ -1,36 +1,19 @@
-(import (rnrs))
-
-;; === list monad ===
-
-(define return
-  (lambda (x) (list x)))
-
-(define bind
-  (lambda (xs f)
-    (concat (map f xs))))
-
-(define empty '())
-
-;; === utilities ===
-
-(define concat
-  (lambda (xs)
-    (fold-right append '() xs)))
+(import (rnrs)
+        (list-builder))
 
 ;; === test utilities ===
 
 (define-syntax assert
-  (lambda (stx)
-    (syntax-case stx ()
-      [(_ compare x y)
-       (syntax (let ([computed-x x]
-                     [computed-y y])
-                 (unless (compare computed-x computed-y)
-                   (printf "Test failed:\nlhs: ~a -> ~a, rhs: ~a -> ~a\n"
-                           (quote x)
-                           x
-                           (quote y)
-                           y))))])))
+  (syntax-rules ()
+    [(_ compare x y)
+     (let ([computed-x x]
+           [computed-y y])
+       (unless (compare computed-x computed-y)
+         (printf "Test failed:\nlhs: ~a -> ~a, rhs: ~a -> ~a\n"
+                 (quote x)
+                 x
+                 (quote y)
+                 y)))]))
 
 ;; === monad laws ===
 
