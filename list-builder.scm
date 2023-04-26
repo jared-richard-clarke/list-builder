@@ -1,5 +1,8 @@
 (library (list-builder)
-         (export for-list)
+         (export for-list
+                 return
+                 bind
+                 empty)
          (import (rnrs))
          
          (define-syntax for-list
