@@ -39,8 +39,9 @@
 
 ## List Comprehensions
 
-List comprehensions are syntactic sugar for processing lists in a monadic context.
-The monadic context for lists is non-determinism.
+The List monad embodies the strategy of combining a chain of non-deterministic computations 
+by applying the operations to all possible values at each step. A list comprehension
+is syntactic sugar over a list in a monadic context.
 
 > One use of functions which return lists is to represent ambiguous computations — that is computations 
 > which may have 0, 1, or more allowed outcomes. In a computation composed from ambigous subcomputations, 
