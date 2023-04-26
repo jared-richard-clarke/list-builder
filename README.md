@@ -42,6 +42,15 @@
 List comprehensions are syntactic sugar for processing lists in a monadic context.
 The monadic context for lists is non-determinism.
 
+> One use of functions which return lists is to represent ambiguous computations — that is computations 
+> which may have 0, 1, or more allowed outcomes. In a computation composed from ambigous subcomputations, 
+> the ambiguity may compound, or it may eventually resolve into a single allowed outcome or no allowed 
+> outcome at all. During this process, the set of possible computational states is represented as a list. 
+> The List monad thus embodies a strategy for performing simultaneous computations along all allowed 
+> paths of an ambiguous computation. 
+>
+> — [All About Monads - Haskell Wiki](https://wiki.haskell.org/All_About_Monads)
+
 ## Haskell
 
 **Source**: [Rosetta Code](https://rosettacode.org/wiki/List_comprehensions#Haskell)
