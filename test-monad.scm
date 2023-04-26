@@ -1,19 +1,6 @@
 (import (rnrs)
-        (list-builder))
-
-;; === test utilities ===
-
-(define-syntax assert
-  (syntax-rules ()
-    [(_ compare x y)
-     (let ([computed-x x]
-           [computed-y y])
-       (unless (compare computed-x computed-y)
-         (printf "Test failed:\nlhs: ~a -> ~a, rhs: ~a -> ~a\n"
-                 (quote x)
-                 x
-                 (quote y)
-                 y)))]))
+        (list-builder)
+        (utils))
 
 ;; === monad laws ===
 
