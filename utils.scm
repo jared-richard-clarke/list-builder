@@ -11,9 +11,9 @@
                 (unless (compare computed-x computed-y)
                   (printf "Test failed:\nlhs: ~a -> ~a, rhs: ~a -> ~a\n"
                           (quote x)
-                          x
+                          computed-x
                           (quote y)
-                          y)))]))
+                          computed-y)))]))
 
          (define range
            (case-lambda
