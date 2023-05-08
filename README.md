@@ -86,7 +86,10 @@ pyTriple n =
   [1 .. n] >>= \x ->
     [x .. n] >>= \y ->
       [y .. n] >>= \z ->
-        (if x ^ 2 + y ^ 2 == z ^ 2 then [(x, y, z)] else [])
+        ( if x ^ 2 + y ^ 2 == z ^ 2
+            then [(x, y, z)]
+            else []
+        )
              
 -- equivalent ->
 
