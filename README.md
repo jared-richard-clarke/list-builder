@@ -64,45 +64,48 @@ instance Monad [] where
 
 pyTriple n =
   [ (x, y, z)
-  | x <- [1 .. n] 
-  , y <- [x .. n] 
-  , z <- [y .. n] 
-  , x ^ 2 + y ^ 2 == z ^ 2 ]
+    | x <- [1 .. n],
+      y <- [x .. n],
+      z <- [y .. n],
+      x ^ 2 + y ^ 2 == z ^ 2
+  ]
 
 -- equivalent ->
 
-pyTriple n = do x <- [1 .. n]
-                y <- [x .. n]
-                z <- [y .. n]
-                if x ^ 2 + y ^ 2 == z ^ 2
-                then [(x, y, z)]
-                else []
+pyTriple n = do
+  x <- [1 .. n]
+  y <- [x .. n]
+  z <- [y .. n]
+  if x ^ 2 + y ^ 2 == z ^ 2
+    then [(x, y, z)]
+    else []
    
 -- equivalent ->
 
 pyTriple n =
   [1 .. n] >>= \x ->
-     [x .. n] >>= \y ->
-        [y .. n] >>= \z ->
-           case x ^ 2 + y ^ 2 == z ^ 2 of
-             True -> [(x, y, z)]
-             _ -> []
+    [x .. n] >>= \y ->
+      [y .. n] >>= \z ->
+        (if x ^ 2 + y ^ 2 == z ^ 2 then [(x, y, z)] else [])
              
 -- equivalent ->
 
 pyTriple n =
-  concat (map
-    (\x ->
-        concat (map
-          (\y ->
-              concat (map
-                (\z ->
+  concatMap
+    ( \x ->
+        concatMap
+          ( \y ->
+              concatMap
+                ( \z ->
                     if x ^ 2 + y ^ 2 == z ^ 2
-                    then [(x, y, z)]
-                    else [])
-                [y .. n]))
-          [x .. n]))
-    [1 .. n])
+                      then [(x, y, z)]
+                      else []
+                )
+                [y .. n]
+          )
+          [x .. n]
+    )
+    [1 .. n]
 
 -- so that ->
 
