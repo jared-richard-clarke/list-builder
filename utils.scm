@@ -9,11 +9,11 @@
               (let ([computed-x x]
                     [computed-y y])
                 (unless (compare computed-x computed-y)
-                  (printf "Test failed:\nlhs: ~a -> ~a, rhs: ~a -> ~a\n"
-                          (quote x)
-                          computed-x
-                          (quote y)
-                          computed-y)))]))
+                  (begin (display "Test failed:")
+                         (newline)
+                         (display "lhs: ") (write (quote x)) (display " -> ") (write computed-x) (display ", ")
+                         (display "rhs: ") (write (quote y)) (display " -> ") (write computed-y)
+                         (newline))))]))
 
          (define range
            (case-lambda
