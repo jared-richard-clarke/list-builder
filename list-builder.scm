@@ -3,7 +3,8 @@
                  return
                  bind
                  empty)
-         (import (rnrs))
+         (import (rnrs base)
+                 (rnrs lists))
          
          (define-syntax for-list
            (syntax-rules (<-)
