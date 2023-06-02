@@ -1,7 +1,9 @@
 (library (utils)
          (export assert
                  range)
-         (import (rnrs))
+         (import (rnrs base)
+                 (rnrs control)
+                 (rnrs io simple))
          
          (define-syntax assert
            (syntax-rules ()
