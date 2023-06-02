@@ -6,8 +6,8 @@
 
 ;; left identity: return x >>= f = f x
 
-(let ([add1 (lambda (x) (list (add1 x)))])
-  (assert equal? (bind (return 6) add1) (add1 6)))
+(let ([add1-list (lambda (x) (list (add1 x)))])
+  (assert equal? (bind (return 6) add1-list) (add1-list 6)))
 
 ;; right identity: m >>= return = m
 
