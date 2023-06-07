@@ -1,6 +1,20 @@
 (import (rnrs base)
-        (list-builder)
+        (rnrs lists)
         (utils))
+
+;; Side Note: Since "return-list", "bind-list", and "concat" are private
+;; to "list-builder", I explicitly added them to this file for testing.
+
+(define return-list
+  (lambda (x) (list x)))
+
+(define bind-list
+  (lambda (xs f)
+    (concat (map f xs))))
+
+(define concat
+  (lambda (xs)
+    (fold-right append '() xs)))
 
 ;; === monad laws ===
 
