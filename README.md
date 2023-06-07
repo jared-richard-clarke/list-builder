@@ -54,8 +54,6 @@ is syntactic sugar over a list in a monadic context.
 
 ## Haskell
 
-**Source**: [Rosetta Code](https://rosettacode.org/wiki/List_comprehensions#Haskell)
-
 ```haskell
 instance Monad [] where
   return x = [x]
