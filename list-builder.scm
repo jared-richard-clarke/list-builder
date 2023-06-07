@@ -1,7 +1,5 @@
 (library (list-builder)
-         (export for-list
-                 return
-                 bind)
+         (export for-list)
          (import (rnrs base)
                  (rnrs lists))
          
