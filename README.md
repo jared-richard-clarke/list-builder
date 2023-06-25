@@ -21,15 +21,15 @@
 ;; - expands ->
 (define py-triple
   (lambda (n)
-    (bind (range 1 n)
+    (bind-list (range 1 n)
           (lambda (x)
-            (bind (range x n)
+            (bind-list (range x n)
                   (lambda (y)
-                    (bind (range y n)
+                    (bind-list (range y n)
                           (lambda (z)
                             (if (= (+ (sqr x) (sqr y))
                                    (sqr z))
-                                (return (list x y z))
+                                (return-list (list x y z))
                                 empty)))))))))
 ;; - so that ->
 (py-triple 21)
