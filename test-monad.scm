@@ -2,13 +2,13 @@
         (rnrs lists)
         (utils))
 
-;; Side Note: Since "return-list", "bind-list", and "concat" are private
-;; to "list-builder", I explicitly added them to this file for testing.
+;; Side Note: Since "return", "bind", and "concat" are private to "list-builder",
+;; I explicitly added them to this file for testing.
 
-(define return-list
+(define return
   (lambda (x) (list x)))
 
-(define bind-list
+(define bind
   (lambda (xs f)
     (concat (map f xs))))
 
