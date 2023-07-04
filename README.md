@@ -2,7 +2,7 @@
 
 - **Description**: Library provides `for-list` — a simplified list comprehension I copied from Haskell
   and implemented as a Scheme macro.
-- **Syntax**: `(for-list expression [(x <- mx) ...] predicate?)`
+- **Syntax**: `(for-list expression ([x <- mx] ...) predicate?)`
 
 ## Example
 
@@ -13,23 +13,23 @@
 (define py-triple
   (lambda (n)
     (for-list (list x y z)
-              [(x <- (range 1 n))
-               (y <- (range x n))
-               (z <- (range y n))]
+              ([x <- (range 1 n)]
+               [y <- (range x n)]
+               [z <- (range y n)])
               (= (+ (sqr x) (sqr y))
                  (sqr z)))))
 ;; - expands ->
 (define py-triple
   (lambda (n)
-    (bind-list (range 1 n)
+    (bind (range 1 n)
           (lambda (x)
-            (bind-list (range x n)
+            (bind (range x n)
                   (lambda (y)
-                    (bind-list (range y n)
+                    (bind (range y n)
                           (lambda (z)
                             (if (= (+ (sqr x) (sqr y))
                                    (sqr z))
-                                (return-list (list x y z))
+                                (return (list x y z))
                                 empty)))))))))
 ;; - so that ->
 (py-triple 21)
