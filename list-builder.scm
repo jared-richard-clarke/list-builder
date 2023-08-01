@@ -5,17 +5,21 @@
          
          (define-syntax for-list
            (syntax-rules (<-)
+             ;; base
              [(_ expression ([x <- mx]))
               (bind mx (lambda (x)
                          (return expression)))]
+             ;; recurse
              [(_ expression ([x <- mx] [y <- my] ...))
               (bind mx (lambda (x)
                          (for-list expression ([y <- my] ...))))]
+             ;; with predicate: base
              [(_ expression ([x <- mx]) predicate)
               (bind mx (lambda (x)
                          (if predicate
                              (return expression)
                              empty)))]
+             ;; with predicate: recurse
              [(_ expression ([x <- mx] [y <- my] ...) predicate)
               (bind mx (lambda (x)
                          (for-list expression ([y <- my] ...) predicate)))]))
