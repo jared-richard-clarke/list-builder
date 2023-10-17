@@ -6,21 +6,21 @@
          (define-syntax yield
            (syntax-rules (<-)
              ;; base case
-             [(_ expression ([x <- mx]))
+             [(yield expression ([x <- mx]))
               (bind mx (lambda (x)
                          (return expression)))]
              ;; recursive case
-             [(_ expression ([x <- mx] [y <- my] ...))
+             [(yield expression ([x <- mx] [y <- my] ...))
               (bind mx (lambda (x)
                          (yield expression ([y <- my] ...))))]
              ;; base case with predicate
-             [(_ expression ([x <- mx]) predicate)
+             [(yield expression ([x <- mx]) predicate)
               (bind mx (lambda (x)
                          (if predicate
                              (return expression)
                              empty)))]
              ;; recursive case with predicate
-             [(_ expression ([x <- mx] [y <- my] ...) predicate)
+             [(yield expression ([x <- mx] [y <- my] ...) predicate)
               (bind mx (lambda (x)
                          (yield expression ([y <- my] ...) predicate)))]))
 
