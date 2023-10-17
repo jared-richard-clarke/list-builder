@@ -3,7 +3,7 @@
          (import (rnrs base)
                  (rnrs lists))
          
-         (define-syntax for-list
+         (define-syntax yield
            (syntax-rules (<-)
              ;; base case
              [(_ expression ([x <- mx]))
@@ -12,7 +12,7 @@
              ;; recursive case
              [(_ expression ([x <- mx] [y <- my] ...))
               (bind mx (lambda (x)
-                         (for-list expression ([y <- my] ...))))]
+                         (yield expression ([y <- my] ...))))]
              ;; base case with predicate
              [(_ expression ([x <- mx]) predicate)
               (bind mx (lambda (x)
@@ -22,7 +22,7 @@
              ;; recursive case with predicate
              [(_ expression ([x <- mx] [y <- my] ...) predicate)
               (bind mx (lambda (x)
-                         (for-list expression ([y <- my] ...) predicate)))]))
+                         (yield expression ([y <- my] ...) predicate)))]))
 
          ;; === monad ===
 
