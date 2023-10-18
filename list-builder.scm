@@ -1,5 +1,5 @@
 (library (list-builder)
-         (export for-list)
+         (export yield)
          (import (rnrs base)
                  (rnrs lists))
 
