@@ -5,6 +5,43 @@
 - **Scheme Syntax**: `(yield expression ([x <- mx] ...) predicate?)`
 - **Haskell Syntax**: `[expression | x <- xs, ... predicate?]`
 
+## Scheme: Squares
+
+```scheme
+(define squares (yield (* x x) ([x <- '(1 2 3 4 5 6 7)])))
+
+;; - expands ->
+
+(define squares (concat-map (lambda (x) (list (* x x))) '(1 2 3 4 5 6 7)))
+
+;; - evaluates ->
+
+(define squares '(1 4 9 16 25 36 49))
+```
+
+## Haskell: Squares
+
+```haskell
+squares = [x * x | x <- [1, 2, 3, 4, 5, 6, 7]]
+
+-- equivalent ->
+
+squares = do x <- [1, 2, 3, 4, 5, 6, 7]
+             return (x * x)
+
+-- equivalent ->
+
+squares = [1, 2, 3, 4, 5, 6, 7] >>= \x -> return (x * x)
+
+-- equivalent ->
+
+squares = concatMap (\x -> [x * x]) [1, 2, 3, 4, 5, 6, 7]
+
+-- evaluates ->
+
+squares = [1, 4, 9, 16, 25, 36, 49]
+```
+
 ## Scheme: Filter
 
 ```scheme
@@ -49,7 +86,7 @@ filter f xs = xs >>= \x -> if f x then return x else mzero
 
 -- equivalent ->
 
-filter f xs = concatMap (\x -> if f x then [x] else [])
+filter f xs = concatMap (\x -> if f x then [x] else []) xs
 
 -- so that ->
 
