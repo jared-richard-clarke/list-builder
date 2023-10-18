@@ -5,14 +5,13 @@
 (define (filter f xs)
   (yield x ([x <- xs]) (f x)))
 
-(define py-triple
-  (lambda (n)
-    (yield (list x y z)
-           ([x <- (range 1 n)]
-            [y <- (range x n)]
-            [z <- (range y n)])
-           (= (+ (sqr x) (sqr y))
-              (sqr z)))))
+(define (py-triple n)
+  (yield (list x y z)
+         ([x <- (range 1 n)]
+          [y <- (range x n)]
+          [z <- (range y n)])
+         (= (+ (sqr x) (sqr y))
+            (sqr z))))
 
 ;; === tests ===
 
