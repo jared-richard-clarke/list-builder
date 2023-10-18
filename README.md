@@ -1,7 +1,7 @@
 # `list-builder.scm`
 
-- **Description**: Library provides `yield` — a list comprehension that I copied from Haskell
-  and implemented as a Scheme macro.
+- **Description**: Library provides `yield` — a list comprehension syntactic form
+  that I copied from Haskell and implemented as a Scheme macro.
 - **Scheme Syntax**: `(yield expression ([x <- mx] ...) predicate?)`
 - **Haskell Syntax**: `[expression | x <- xs, ... predicate?]`
 
