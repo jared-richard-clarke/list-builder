@@ -1,24 +1,78 @@
 # `list-builder.scm`
 
-- **Description**: Library provides `for-list` — a simplified list comprehension I copied from Haskell
+- **Description**: Library provides `yield` — a simplified list comprehension I copied from Haskell
   and implemented as a Scheme macro.
-- **Syntax**: `(for-list expression ([x <- mx] ...) predicate?)`
+- **Scheme Syntax**: `(yield expression ([x <- mx] ...) predicate?)`
+- **Haskell Syntax**: `[expression | x <- xs, ... predicate?]`
 
-## Example
+## Scheme: Filter
 
 ```scheme
-(import (rnrs)
-        (list-builder))
-        
-(define py-triple
-  (lambda (n)
-    (for-list (list x y z)
-              ([x <- (range 1 n)]
-               [y <- (range x n)]
-               [z <- (range y n)])
-              (= (+ (sqr x) (sqr y))
-                 (sqr z)))))
+(define (filter f xs)
+  (yield x ([x <- xs]) (f x)))
+
 ;; - expands ->
+
+(define filter
+  (lambda (f x)
+    (bind xs
+          (lambda (x)
+            (if (f x)
+                (return x)
+                empty)))))
+
+;; - so that ->
+
+(filter even? '(1 2 3 4 5 6 7 8 9 10))
+
+;; - evaluates ->
+
+'(2 4 6 8 10)
+```
+
+## Haskell: Filter
+
+```haskell
+filter f xs = [x | x <- xs, f x]
+
+-- equivalent ->
+
+filter f xs = do
+  x <- xs
+  if f x
+    then [x]
+    else []
+
+-- equivalent ->
+
+filter f xs = xs >>= \x -> if f x then [x] else []
+
+-- equivalent ->
+
+filter f xs = concatMap (\x -> if f x then [x] else [])
+
+-- so that ->
+
+filter even [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+-- evaluates ->
+
+[2, 4, 6, 8, 10]
+```
+
+## Scheme: Pythagorean Triples
+
+```scheme       
+(define (py-triple n)
+  (yield (list x y z)
+         ([x <- (range 1 n)]
+          [y <- (range x n)]
+          [z <- (range y n)])
+         (= (+ (sqr x) (sqr y))
+            (sqr z))))
+
+;; - expands ->
+
 (define py-triple
   (lambda (n)
     (bind (range 1 n)
@@ -32,34 +86,17 @@
                                 (return (list x y z))
                                 empty)))))))))
 ;; - so that ->
+
 (py-triple 21)
+
 ;; - evaluates ->
+
 '((3 4 5) (5 12 13) (6 8 10) (8 15 17) (9 12 15) (12 16 20))
 ```
 
-## List Comprehensions
-
-The List monad embodies the strategy of combining a chain of non-deterministic computations 
-by applying the operations to all possible values at each step. A list comprehension
-is syntactic sugar over a list in a monadic context.
-
-> One use of functions which return lists is to represent ambiguous computations — that is computations 
-> which may have 0, 1, or more allowed outcomes. In a computation composed from ambigous subcomputations, 
-> the ambiguity may compound, or it may eventually resolve into a single allowed outcome or no allowed 
-> outcome at all. During this process, the set of possible computational states is represented as a list. 
-> The List monad thus embodies a strategy for performing simultaneous computations along all allowed 
-> paths of an ambiguous computation. 
->
-> — [All About Monads - Haskell Wiki](https://wiki.haskell.org/All_About_Monads)
-
-## Haskell
+## Haskell: Pythagorean Triples
 
 ```haskell
-instance Monad [] where
-  return x = [x]
-  xs >>= f = concat (map f xs)
-  fail _   = []
-
 pyTriple n =
   [ (x, y, z)
     | x <- [1 .. n],
@@ -115,6 +152,30 @@ pyTriple 21
 -- evaluates ->
 
 [(3,4,5), (5,12,13), (6,8,10), (7,24,25), (8,15,17), (9,12,15), (12,16,20)]
+```
+
+## List Comprehensions
+
+The List monad embodies the strategy of combining a chain of non-deterministic computations 
+by applying the operations to all possible values at each step. A list comprehension
+is syntactic sugar over a list in a monadic context.
+
+> One use of functions which return lists is to represent ambiguous computations — that is computations 
+> which may have 0, 1, or more allowed outcomes. In a computation composed from ambigous subcomputations, 
+> the ambiguity may compound, or it may eventually resolve into a single allowed outcome or no allowed 
+> outcome at all. During this process, the set of possible computational states is represented as a list. 
+> The List monad thus embodies a strategy for performing simultaneous computations along all allowed 
+> paths of an ambiguous computation. 
+>
+> — [All About Monads - Haskell Wiki](https://wiki.haskell.org/All_About_Monads)
+
+### Monadic Definition
+
+```haskell
+instance Monad [] where
+  return x = [x]
+  xs >>= f = concat (map f xs)
+  fail _   = []
 ```
 
 ## Process
