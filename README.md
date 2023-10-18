@@ -40,12 +40,12 @@ filter f xs = [x | x <- xs, f x]
 filter f xs = do
   x <- xs
   if f x
-    then [x]
-    else []
+    then return x
+    else mzero
 
 -- equivalent ->
 
-filter f xs = xs >>= \x -> if f x then [x] else []
+filter f xs = xs >>= \x -> if f x then return x else mzero
 
 -- equivalent ->
 
@@ -112,8 +112,8 @@ pyTriple n = do
   y <- [x .. n]
   z <- [y .. n]
   if x ^ 2 + y ^ 2 == z ^ 2
-    then [(x, y, z)]
-    else []
+    then return (x, y, z)
+    else mzero
    
 -- equivalent ->
 
@@ -122,8 +122,8 @@ pyTriple n =
     [x .. n] >>= \y ->
       [y .. n] >>= \z ->
         ( if x ^ 2 + y ^ 2 == z ^ 2
-            then [(x, y, z)]
-            else []
+            then return (x, y, z)
+            else mzero
         )
              
 -- equivalent ->
