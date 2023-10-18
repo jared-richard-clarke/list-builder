@@ -15,11 +15,11 @@
 
 (define filter
   (lambda (f x)
-    (bind xs
-          (lambda (x)
-            (if (f x)
-                (return x)
-                empty)))))
+    (concat-map xs
+                (lambda (x)
+                  (if (f x)
+                      (list x)
+                      empty)))))
 
 ;; - so that ->
 
@@ -75,16 +75,16 @@ filter even [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 (define py-triple
   (lambda (n)
-    (bind (range 1 n)
-          (lambda (x)
-            (bind (range x n)
-                  (lambda (y)
-                    (bind (range y n)
-                          (lambda (z)
-                            (if (= (+ (sqr x) (sqr y))
-                                   (sqr z))
-                                (return (list x y z))
-                                empty)))))))))
+    (concat-map (range 1 n)
+                (lambda (x)
+                  (concat-map (range x n)
+                              (lambda (y)
+                                (concat-map (range y n)
+                                            (lambda (z)
+                                              (if (= (+ (sqr x) (sqr y))
+                                                     (sqr z))
+                                                  (list (list x y z))
+                                                  empty)))))))))
 ;; - so that ->
 
 (py-triple 21)
