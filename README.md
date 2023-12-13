@@ -2,8 +2,13 @@
 
 - **Description**: Library provides `yield` — a list comprehension syntactic form
   that I copied from Haskell and implemented as a Scheme macro.
-- **Scheme Syntax**: `(yield expression ([x <- mx] ...) predicate?)`
+- **Scheme Syntax**: `(yield expression ([x <- xs] ...) predicate?)`
 - **Haskell Syntax**: `[expression | x <- xs, ... predicate?]`
+
+**Side Note**: Haskell is a **non-strict** language whereas Scheme is a **strict** language. Scheme
+list comprehension will build an entire list once invoked, whereas a Haskell list comprehension
+will only build as far as other functions demand of it. This can result in wildly different
+consumptions of time and space.
 
 ## Scheme: Pythagorean Triples
 
