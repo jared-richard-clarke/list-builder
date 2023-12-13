@@ -15,28 +15,30 @@ once declared, might not produce anything at all.
 ```scheme
 (define binary '("0" "1"))
 
-(define count-to-7
-  (yield (string-append x y z)
-         ([x <- binary]
-          [y <- binary]
-          [z <- binary])))
+(define count-to-fifteen
+  (yield (string-append b4 b3 b2 b1)
+         ([b4 <- binary]
+          [b3 <- binary]
+          [b2 <- binary]
+          [b1 <- binary])))
 
 ;; - evaluates ->
 
-'("000" "001" "010" "011" "100" "101" "110" "111")
+'("0000" "0001" "0010" "0011" "0100" "0101" "0110" "0111" "1000" "1001" "1010" "1011" "1100" "1101" "1110" "1111")
 ```
 
 ## Haskell: Count in Binary
 
 ```haskell
 binary = ['0', '1']
-countToSeven = [[x, y, z] | x <- binary,
-                            y <- binary,
-                            z <- binary]
+countToFifteen = [[b4, b3, b2, b1] | b4 <- binary,
+                                     b3 <- binary,
+                                     b2 <- binary,
+                                     b1 <- binary]
 
 -- evaluates ->
 
-["000", "001", "010", "011", "100", "101", "110", "111"]
+["0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"]
 ```
 
 ## Scheme: Pythagorean Triples
