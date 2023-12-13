@@ -5,7 +5,7 @@
 - **Scheme Syntax**: `(yield expression ([x <- xs] ...) predicate?)`
 - **Haskell Syntax**: `[expression | x <- xs, ... predicate?]`
 
-**Side Note**: Haskell is a **non-strict** language whereas Scheme is a **strict** language. Scheme
+**Side Note**: Haskell is a **non-strict** language whereas Scheme is a **strict** language. A Scheme
 list comprehension will build an entire list once invoked, whereas a Haskell list comprehension
 will only build as far as other functions demand of it. This can result in wildly different
 consumptions of time and space.
