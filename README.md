@@ -16,11 +16,24 @@ once declared, might not produce anything at all.
 (define binary '("0" "1"))
 
 (define count-to-fifteen
-  (yield (string-append b4 b3 b2 b1)
-         ([b4 <- binary]
-          [b3 <- binary]
-          [b2 <- binary]
-          [b1 <- binary])))
+  (yield (string-append bit-4 bit-3 bit-2 bit-1)
+         ([bit-4 <- binary]
+          [bit-3 <- binary]
+          [bit-2 <- binary]
+          [bit-1 <- binary])))
+
+;; - expands ->
+
+(define count-to-fifteen
+  (concat-map binary
+              (lambda (bit-4)
+                (concat-map binary
+                            (lambda (bit-3)
+                              (concat-map binary
+                                          (lambda (bit-2)
+                                            (concat-map binary
+                                                        (lambda (bit-1)
+                                                          (list (string-append bit-4 bit-3 bit-2 bit-1)))))))))))
 
 ;; - evaluates ->
 
@@ -34,10 +47,40 @@ once declared, might not produce anything at all.
 
 ```haskell
 binary = ['0', '1']
-countToFifteen = [[b4, b3, b2, b1] | b4 <- binary,
-                                     b3 <- binary,
-                                     b2 <- binary,
-                                     b1 <- binary]
+countToFifteen = [[bit4, bit3, bit2, bit1] | bit4 <- binary,
+                                             bit3 <- binary,
+                                             bit2 <- binary,
+                                             bit1 <- binary]
+
+-- equivalent ->
+
+countToFifteen = do
+  bit4 <- binary
+  bit3 <- binary
+  bit2 <- binary
+  bit1 <- binary
+  return [bit4, bit3, bit2, bit1]
+
+-- equivalent ->
+
+countToFifteen =
+  binary >>= \bit4 ->
+  binary >>= \bit3 ->
+  binary >>= \bit2 ->
+  binary >>= \bit1 ->
+  return [bit4, bit3, bit2, bit1]
+
+-- equivalent ->
+
+countToFifteen =
+  concatMap (\bit4 ->
+              concatMap (\bit3 ->
+                          concatMap (\bit2 ->
+                                      concatMap (\bit1 -> [[bit4, bit3, bit2, bit1]])
+                                                 binary)
+                                     binary)
+                        binary)
+            binary
 
 -- evaluates ->
 
