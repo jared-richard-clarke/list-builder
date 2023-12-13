@@ -10,6 +10,33 @@ list comprehension will build an entire list once invoked, whereas a Haskell lis
 will only build as far as a program pattern matches on its contents. A Haskell list comprehension,
 once declared, might not produce anything at all.
 
+## Scheme: Count in Binary
+
+```scheme
+(define binary '("0" "1"))
+
+(define count-to-7
+  (yield (string-append x y z)
+         ([x <- binary]
+          [y <- binary]
+          [z <- binary])))
+
+;; - evaluates ->
+
+'("000" "001" "010" "011" "100" "101" "110" "111")
+```
+
+## Haskell: Count in Binary
+
+```haskell
+binary = ['0', '1']
+countToSeven = [[x, y, z] | x <- binary, y <- binary, z <- binary]
+
+-- evaluates ->
+
+["000", "001", "010", "011", "100", "101", "110", "111"]
+```
+
 ## Scheme: Pythagorean Triples
 
 ```scheme       
