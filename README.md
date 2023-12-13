@@ -7,8 +7,8 @@
 
 **Side Note**: Haskell is a **non-strict** language whereas Scheme is a **strict** language. A Scheme
 list comprehension will build an entire list once invoked, whereas a Haskell list comprehension
-will only build as far as other functions demand of it. This can result in wildly different
-consumptions of time and space.
+will only build as far as a program pattern matches on its contents. A Haskell list comprehension,
+once declared, might not produce anything at all.
 
 ## Scheme: Pythagorean Triples
 
