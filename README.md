@@ -30,7 +30,9 @@ once declared, might not produce anything at all.
 
 ```haskell
 binary = ['0', '1']
-countToSeven = [[x, y, z] | x <- binary, y <- binary, z <- binary]
+countToSeven = [[x, y, z] | x <- binary,
+                            y <- binary,
+                            z <- binary]
 
 -- evaluates ->
 
