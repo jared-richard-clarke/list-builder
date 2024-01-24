@@ -28,12 +28,21 @@
 
          (define empty '())
 
-         (define concat
-           (lambda (xs)
-             (fold-right append '() xs)))
+         ;; (define concat
+         ;;   (lambda (xs)
+         ;;     (fold-right append empty xs)))
+         ;;
+         ;; Calling map between concatenations produces intermediary lists.
+         ;; Avoid extra allocations by integrating map directly into concat.
+         ;;
+         ;; (define concat-map
+         ;;   (lambda (xs f)
+         ;;     (concat (map f xs))))
 
          (define concat-map
            (lambda (xs f)
-             (concat (map f xs))))
+             (if (null? xs)
+                 empty
+                 (append (f (car xs)) (concat-map (cdr xs) f)))))
 
          )
