@@ -13,10 +13,10 @@ once declared, might not produce anything at all.
 ## Scheme: Count in Binary
 
 ```scheme
-(define binary '("0" "1"))
+(define binary '(0 1))
 
 (define count-to-fifteen
-  (yield (string-append bit-4 bit-3 bit-2 bit-1)
+  (yield (list bit-4 bit-3 bit-2 bit-1)
          ([bit-4 <- binary]
           [bit-3 <- binary]
           [bit-2 <- binary]
@@ -33,14 +33,14 @@ once declared, might not produce anything at all.
                                           (lambda (bit-2)
                                             (concat-map binary
                                                         (lambda (bit-1)
-                                                          (list (string-append bit-4 bit-3 bit-2 bit-1)))))))))))
+                                                          (list (list bit-4 bit-3 bit-2 bit-1)))))))))))
 
 ;; - evaluates ->
 
-'("0000" "0001" "0010" "0011"
-  "0100" "0101" "0110" "0111"
-  "1000" "1001" "1010" "1011"
-  "1100" "1101" "1110" "1111")
+'((0 0 0 0) (0 0 0 1) (0 0 1 0) (0 0 1 1)
+  (0 1 0 0) (0 1 0 1) (0 1 1 0) (0 1 1 1)
+  (1 0 0 0) (1 0 0 1) (1 0 1 0) (1 0 1 1)
+  (1 1 0 0) (1 1 0 1) (1 1 1 0) (1 1 1 1))
 ```
 
 ## Haskell: Count in Binary
