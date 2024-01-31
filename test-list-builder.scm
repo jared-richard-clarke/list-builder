@@ -2,10 +2,10 @@
         (list-builder)
         (utils))
 
-(define binary '("0" "1"))
+(define binary '(0 1))
 
 (define count-to-fifteen
-  (yield (string-append bit-4 bit-3 bit-2 bit-1)
+  (yield (list bit-4 bit-3 bit-2 bit-1)
          ([bit-4 <- binary]
           [bit-3 <- binary]
           [bit-2 <- binary]
@@ -20,12 +20,13 @@
             (sqr z))))
 
 ;; === tests ===
+
 (assert equal?
         count-to-fifteen
-        '("0000" "0001" "0010" "0011"
-          "0100" "0101" "0110" "0111"
-          "1000" "1001" "1010" "1011"
-          "1100" "1101" "1110" "1111"))
+        '((0 0 0 0) (0 0 0 1) (0 0 1 0) (0 0 1 1)
+          (0 1 0 0) (0 1 0 1) (0 1 1 0) (0 1 1 1)
+          (1 0 0 0) (1 0 0 1) (1 0 1 0) (1 0 1 1)
+          (1 1 0 0) (1 1 0 1) (1 1 1 0) (1 1 1 1)))
 
 (assert equal?
         (py-triple 21)
